@@ -1,0 +1,6 @@
+{
+  "name": "OPOAD Nexus Core",
+  "description": "Global AI News & Creator Platform - Intelligence, Automation & Orchestration.",
+  "requestFramePermissions": ["camera", "microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
