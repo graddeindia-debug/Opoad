@@ -1,25 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import {
-  Paperclip,
-  Camera,
-  Mic,
-  Image as ImageIcon,
-  Monitor,
-  Search,
-  Brain,
-  Sparkles,
-  ArrowUp,
-  X,
-  Scan,
-  FileText,
-  ScanLine,
-  QrCode,
-  Grid3X3,
-  Cpu,
-  Check,
-  Zap,
-  Loader2,
-} from "lucide-react";
+import { Paperclip, Camera, Mic, Image as ImageIcon, Monitor, Search, Brain, Sparkles, ArrowUp, X, Scan, FileText, ScanLine, QrCode, Grid3x2 as Grid3X3, Cpu, Check, Zap, Loader as Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { processAiQuery } from "@/lib/ai.functions";
 
