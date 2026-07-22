@@ -182,7 +182,7 @@ function LoginPage() {
             {/* OPOAD Brand */}
             <div className="mt-6 flex flex-col items-center lg:items-start">
               <img
-                src="/opoad-logo.png"
+                src="/opoad-logo-transparent.png"
                 alt="OPOAD"
                 className="h-20 w-auto object-contain"
                 style={{
