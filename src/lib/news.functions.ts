@@ -112,7 +112,7 @@ async function fetchFeed(url: string, category: NewsCategory): Promise<NewsItem[
 }
 
 export const getNews = createServerFn({ method: "GET" })
-  .inputValidator((data: { category?: NewsCategory; region?: NewsRegion } | undefined) => ({
+  .validator((data: { category?: NewsCategory; region?: NewsRegion } | undefined) => ({
     category: (data?.category ?? "top") as NewsCategory,
     region: (data?.region ?? "global") as NewsRegion,
   }))

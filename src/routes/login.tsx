@@ -12,7 +12,9 @@ import {
   Brain,
   Zap,
   Rocket,
+  Loader2,
 } from "lucide-react";
+import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/login")({
   head: () => ({
@@ -102,10 +104,28 @@ function OPOADCubeIcon() {
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { signIn, signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false);
+
+  const handleSubmit = async () => {
+    if (!email.trim() || !password.trim()) return;
+    setAuthError(null);
+    setSubmitting(true);
+    const fn = isSignUp ? signUp : signIn;
+    const { error } = await fn(email.trim(), password);
+    setSubmitting(false);
+    if (error) {
+      setAuthError(error);
+    } else {
+      navigate({ to: "/" });
+    }
+  };
 
   return (
     <div className="relative min-h-screen w-full overflow-hidden bg-[#05070A] flex flex-col">
@@ -353,29 +373,44 @@ function LoginPage() {
               </button>
             </div>
 
-            {/* Sign In button */}
+            {/* Error message */}
+            {authError && (
+              <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-xs text-red-400">
+                {authError}
+              </div>
+            )}
+
+            {/* Sign In / Sign Up button */}
             <button
-              onClick={() => {
-                if (email.trim() && password.trim()) {
-                  localStorage.setItem("opoad_auth", JSON.stringify({ email }));
-                  navigate({ to: "/" });
-                }
-              }}
-              className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-black transition-all hover:opacity-90 active:scale-[0.98]"
+              onClick={handleSubmit}
+              disabled={submitting}
+              className="flex w-full items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-semibold text-black transition-all hover:opacity-90 active:scale-[0.98] disabled:opacity-60"
               style={{
                 background: "linear-gradient(135deg, #f59e0b, #d97706)",
                 boxShadow: "0 0 24px rgba(245,158,11,0.4), 0 4px 16px rgba(0,0,0,0.3)",
               }}
             >
-              Sign In
-              <ArrowRight size={16} />
+              {submitting ? (
+                <Loader2 size={16} className="animate-spin" />
+              ) : (
+                <>
+                  {isSignUp ? "Create Account" : "Sign In"}
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
 
             {/* Create account */}
             <p className="mt-4 text-center text-xs text-white/40">
-              Don't have an account?{" "}
-              <button className="text-sky-400 hover:text-sky-300 transition-colors font-medium">
-                Create Account
+              {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
+              <button
+                onClick={() => {
+                  setIsSignUp(!isSignUp);
+                  setAuthError(null);
+                }}
+                className="text-sky-400 hover:text-sky-300 transition-colors font-medium"
+              >
+                {isSignUp ? "Sign In" : "Create Account"}
               </button>
             </p>
 

@@ -1,76 +1,83 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { TopNav } from "@/components/dashboard/TopNav";
-import { Plus, Trash2, Edit2, ArrowLeft } from "lucide-react";
+import { Plus, Trash2, Edit2, ArrowLeft, LogOut } from "lucide-react";
+import { supabase, type Project } from "@/lib/supabase";
+import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/projects")({
   component: ProjectsPage,
 });
 
-interface Project {
-  id: number;
-  name: string;
-  description: string;
-  icon?: string;
-  createdAt: string;
-}
-
 function ProjectsPage() {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     icon: "📁",
   });
 
-  useEffect(() => {
-    loadProjects();
+  const loadProjects = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+    const { data, error: queryError } = await supabase
+      .from("projects")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (queryError) {
+      setError(queryError.message);
+    } else {
+      setProjects((data as Project[]) ?? []);
+    }
+    setLoading(false);
   }, []);
 
-  const loadProjects = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch("/api/projects");
-      if (response.ok) {
-        const data = await response.json();
-        setProjects(data || []);
-      }
-    } catch (error) {
-      console.error("[v0] Failed to load projects:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    loadProjects();
+  }, [loadProjects]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      if (editingId) {
-        const response = await fetch(`/api/projects/${editingId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
-        if (!response.ok) throw new Error("Failed to update");
-        setEditingId(null);
-      } else {
-        const response = await fetch("/api/projects", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        });
-        if (!response.ok) throw new Error("Failed to create");
+    setError(null);
+
+    if (editingId) {
+      const { error: updateError } = await supabase
+        .from("projects")
+        .update({
+          name: formData.name,
+          description: formData.description,
+          icon: formData.icon,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", editingId);
+
+      if (updateError) {
+        setError(updateError.message);
+        return;
       }
-      setFormData({ name: "", description: "", icon: "📁" });
-      setShowForm(false);
-      await loadProjects();
-    } catch (error) {
-      console.error("[v0] Failed to save project:", error);
+      setEditingId(null);
+    } else {
+      const { error: insertError } = await supabase.from("projects").insert({
+        name: formData.name,
+        description: formData.description,
+        icon: formData.icon,
+      });
+
+      if (insertError) {
+        setError(insertError.message);
+        return;
+      }
     }
+    setFormData({ name: "", description: "", icon: "📁" });
+    setShowForm(false);
+    await loadProjects();
   };
 
   const handleEdit = (project: Project) => {
@@ -83,18 +90,15 @@ function ProjectsPage() {
     setShowForm(true);
   };
 
-  const handleDelete = async (id: number) => {
-    if (confirm("Delete this project?")) {
-      try {
-        const response = await fetch(`/api/projects/${id}`, {
-          method: "DELETE",
-        });
-        if (!response.ok) throw new Error("Failed to delete");
-        await loadProjects();
-      } catch (error) {
-        console.error("[v0] Failed to delete:", error);
-      }
+  const handleDelete = async (id: string) => {
+    if (!confirm("Delete this project?")) return;
+    setError(null);
+    const { error: deleteError } = await supabase.from("projects").delete().eq("id", id);
+    if (deleteError) {
+      setError(deleteError.message);
+      return;
     }
+    await loadProjects();
   };
 
   return (
@@ -111,20 +115,45 @@ function ProjectsPage() {
             >
               <ArrowLeft size={20} />
             </button>
-            <h1 className="text-3xl font-bold font-mono tracking-wider">PROJECTS</h1>
+            <div>
+              <h1 className="text-3xl font-bold font-mono tracking-wider">PROJECTS</h1>
+              {user && (
+                <p className="text-sm text-white/50 mt-1">
+                  Signed in as {user.email}
+                </p>
+              )}
+            </div>
           </div>
-          <button
-            onClick={() => {
-              setFormData({ name: "", description: "", icon: "📁" });
-              setEditingId(null);
-              setShowForm(!showForm);
-            }}
-            className="flex items-center gap-2 px-4 py-2 bg-sky-500/20 border border-sky-500/50 rounded-lg hover:bg-sky-500/30 transition-colors"
-          >
-            <Plus size={18} />
-            New Project
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => {
+                setFormData({ name: "", description: "", icon: "📁" });
+                setEditingId(null);
+                setShowForm(!showForm);
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-sky-500/20 border border-sky-500/50 rounded-lg hover:bg-sky-500/30 transition-colors"
+            >
+              <Plus size={18} />
+              New Project
+            </button>
+            <button
+              onClick={() => {
+                signOut();
+                navigate({ to: "/login" });
+              }}
+              className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-lg hover:bg-white/10 transition-colors"
+            >
+              <LogOut size={16} />
+              Sign Out
+            </button>
+          </div>
         </div>
+
+        {error && (
+          <div className="mb-6 p-4 border border-red-500/30 bg-red-500/10 rounded-lg text-sm text-red-400">
+            {error}
+          </div>
+        )}
 
         {/* Create/Edit Form */}
         {showForm && (
@@ -215,7 +244,7 @@ function ProjectsPage() {
                 <h3 className="font-mono font-semibold mb-1">{project.name}</h3>
                 <p className="text-sm text-white/60">{project.description}</p>
                 <div className="mt-3 text-xs text-white/40">
-                  {new Date(project.createdAt).toLocaleDateString()}
+                  {new Date(project.created_at).toLocaleDateString()}
                 </div>
               </div>
             ))}

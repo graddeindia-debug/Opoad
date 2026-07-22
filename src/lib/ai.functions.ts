@@ -34,7 +34,7 @@ export interface GeneratedScript {
 
 // Server function to generate multiple creative video ideas/angles
 export const generateVideoIdeas = createServerFn({ method: "POST" })
-  .inputValidator(
+  .validator(
     (data: { title: string; summary?: string; source?: string; language: string; tone: string }) =>
       data,
   )
@@ -100,7 +100,7 @@ All text in the generated ideas should strictly respect the requested language (
 
 // Server function to generate a detailed, structured creator script
 export const generateScript = createServerFn({ method: "POST" })
-  .inputValidator(
+  .validator(
     (data: {
       title: string;
       summary?: string;
