@@ -138,32 +138,58 @@ function LoginPage() {
           {/* Hero illustration */}
           <div className="w-full max-w-lg">
             <div className="relative mx-auto lg:mx-0 w-72 h-72 md:w-80 md:h-80 lg:w-[380px] lg:h-[380px]">
-              {/* Outer glow ring */}
+              {/* Outer ambient glow */}
               <div
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background: "radial-gradient(circle, rgba(56,189,248,0.08) 0%, transparent 70%)",
-                  boxShadow: "0 0 80px rgba(56,189,248,0.15)",
+                  background: "radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%)",
+                  boxShadow: "0 0 100px rgba(56,189,248,0.25)",
                 }}
               />
-              {/* Hero image */}
-              <img
-                src="/login-hero.png"
-                alt="Evolution — From Unknown to Infinite"
-                className="relative z-10 h-full w-full rounded-full object-cover"
+              {/* Black circle with rotating OPOAD logo */}
+              <div
+                className="relative z-10 h-full w-full rounded-full bg-black flex items-center justify-center animate-spin"
                 style={{
-                  boxShadow: "0 0 60px rgba(56,189,248,0.25), 0 0 120px rgba(56,189,248,0.1)",
-                  border: "1px solid rgba(56,189,248,0.2)",
+                  animationDuration: "18s",
+                  animationTimingFunction: "linear",
+                  boxShadow: "0 0 60px rgba(56,189,248,0.3), 0 0 120px rgba(56,189,248,0.12), inset 0 0 40px rgba(56,189,248,0.05)",
+                  border: "1px solid rgba(56,189,248,0.3)",
+                }}
+              >
+                {/* Counter-rotate logo so it stays upright while circle spins */}
+                <div
+                  className="animate-spin flex items-center justify-center w-3/4"
+                  style={{ animationDuration: "18s", animationTimingFunction: "linear", animationDirection: "reverse" }}
+                >
+                  <img
+                    src="/opoad-logo.png"
+                    alt="OPOAD"
+                    className="w-full object-contain"
+                    style={{
+                      filter: "brightness(2) contrast(1.2) drop-shadow(0 0 24px rgba(56,189,248,1)) drop-shadow(0 0 50px rgba(56,189,248,0.7)) drop-shadow(0 0 80px rgba(251,191,36,0.4))",
+                      mixBlendMode: "screen",
+                    }}
+                  />
+                </div>
+              </div>
+              {/* Inner orbit ring — glowing */}
+              <div
+                className="absolute inset-[-14px] rounded-full animate-spin"
+                style={{
+                  animationDuration: "20s",
+                  border: "1.5px solid rgba(56,189,248,0.5)",
+                  boxShadow: "0 0 12px rgba(56,189,248,0.6), inset 0 0 12px rgba(56,189,248,0.2)",
                 }}
               />
-              {/* Orbit ring decoration */}
+              {/* Outer orbit ring — glowing amber, reverse */}
               <div
-                className="absolute inset-[-12px] rounded-full border border-sky-400/15 animate-spin"
-                style={{ animationDuration: "20s" }}
-              />
-              <div
-                className="absolute inset-[-24px] rounded-full border border-amber-400/10 animate-spin"
-                style={{ animationDuration: "35s", animationDirection: "reverse" }}
+                className="absolute inset-[-28px] rounded-full animate-spin"
+                style={{
+                  animationDuration: "35s",
+                  animationDirection: "reverse",
+                  border: "1px solid rgba(251,191,36,0.45)",
+                  boxShadow: "0 0 16px rgba(251,191,36,0.5), inset 0 0 16px rgba(251,191,36,0.15)",
+                }}
               />
             </div>
 
@@ -172,22 +198,13 @@ function LoginPage() {
               <img
                 src="/opoad-logo.png"
                 alt="OPOAD"
-                className="h-16 w-auto object-contain"
+                className="h-20 w-auto object-contain"
                 style={{
                   mixBlendMode: "screen",
                   filter:
-                    "brightness(1.4) contrast(1.1) drop-shadow(0 0 20px rgba(56,189,248,0.9)) drop-shadow(0 0 40px rgba(56,189,248,0.5))",
+                    "brightness(2.5) contrast(1.2) drop-shadow(0 0 30px rgba(56,189,248,1)) drop-shadow(0 0 60px rgba(56,189,248,0.8)) drop-shadow(0 0 90px rgba(251,191,36,0.5))",
                 }}
               />
-              <p
-                className="font-mono text-[9px] tracking-[0.35em] text-white mt-1 pl-1"
-                style={{ textShadow: "0 0 8px rgba(255,255,255,0.4)" }}
-              >
-                INTELLIGENCE · AUTOMATION · FUTURE
-              </p>
-              <p className="mt-2 font-mono text-[10px] tracking-[0.3em] text-amber-400/90">
-                FROM UNKNOWN · <span className="text-amber-300">TO INFINITE</span>
-              </p>
             </div>
 
             {/* Welcome text */}
