@@ -151,8 +151,9 @@ function LoginPage() {
               <div
                 className="relative z-10 h-full w-full rounded-full overflow-hidden bg-black"
                 style={{
-                  boxShadow: "0 0 60px rgba(56,189,248,0.3), 0 0 120px rgba(56,189,248,0.12), inset 0 0 40px rgba(56,189,248,0.05)",
-                  border: "1px solid rgba(56,189,248,0.3)",
+                  boxShadow:
+                    "0 0 0 2px rgba(56,189,248,0.9), 0 0 30px rgba(56,189,248,0.8), 0 0 80px rgba(56,189,248,0.5), 0 0 160px rgba(56,189,248,0.25), inset 0 0 60px rgba(56,189,248,0.08)",
+                  border: "2px solid rgba(56,189,248,1)",
                 }}
               >
                 <LoginEarthScene />

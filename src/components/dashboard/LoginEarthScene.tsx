@@ -5,11 +5,11 @@ import * as THREE from "three";
 import earthTex from "@/assets/earth.jpg";
 
 // Elliptical orbit parameters
-const ORBIT_A = 0.85; // semi-major axis (X)
-const ORBIT_B = 0.32; // semi-minor axis (Z) — ellipse gives 3-D depth
-const ORBIT_TILT = 0.18; // vertical wobble
+const ORBIT_A = 0.9;  // semi-major axis (X)
+const ORBIT_B = 0.38; // semi-minor axis (Z) — ellipse depth
+const ORBIT_TILT = 0.12; // orbital plane tilt (Y offset, single frequency = clean ellipse)
 const ORBIT_SPEED = 0.38; // radians/s — one full orbit ~16 s
-const EARTH_RADIUS = 0.6;
+const EARTH_RADIUS = 0.68;
 
 function OrbitalEarth() {
   const earthRef = useRef<THREE.Mesh>(null!);
@@ -24,11 +24,11 @@ function OrbitalEarth() {
     // Slight axial tilt wobble for realism
     earthRef.current.rotation.z = Math.sin(t * 0.12) * 0.04;
 
-    // Elliptical orbital motion
+    // Elliptical orbital motion (single-frequency = clean ellipse, no figure-8)
     const angle = t * ORBIT_SPEED;
     orbitRef.current.position.x = Math.cos(angle) * ORBIT_A;
     orbitRef.current.position.z = Math.sin(angle) * ORBIT_B;
-    orbitRef.current.position.y = Math.sin(angle * 2) * ORBIT_TILT;
+    orbitRef.current.position.y = Math.sin(angle) * ORBIT_TILT;
 
     // Perspective scaling: closer to camera (positive Z) → slightly bigger
     const depth = (orbitRef.current.position.z + ORBIT_B) / (ORBIT_B * 2);
@@ -43,31 +43,31 @@ function OrbitalEarth() {
         <sphereGeometry args={[EARTH_RADIUS, 64, 64]} />
         <meshStandardMaterial
           map={texture}
-          roughness={0.82}
-          metalness={0.08}
-          emissive={new THREE.Color("#071624")}
-          emissiveIntensity={0.25}
+          roughness={0.6}
+          metalness={0.05}
+          emissive={new THREE.Color("#0d2a4a")}
+          emissiveIntensity={0.4}
         />
       </mesh>
 
-      {/* Inner atmosphere glow */}
-      <mesh scale={1.055}>
+      {/* Inner atmosphere — bright blue rim */}
+      <mesh scale={1.06}>
         <sphereGeometry args={[EARTH_RADIUS, 32, 32]} />
         <meshBasicMaterial
           color="#38bdf8"
           transparent
-          opacity={0.13}
+          opacity={0.28}
           side={THREE.BackSide}
         />
       </mesh>
 
       {/* Outer atmosphere haze */}
-      <mesh scale={1.18}>
+      <mesh scale={1.22}>
         <sphereGeometry args={[EARTH_RADIUS, 32, 32]} />
         <meshBasicMaterial
           color="#0ea5e9"
           transparent
-          opacity={0.045}
+          opacity={0.1}
           side={THREE.BackSide}
         />
       </mesh>
@@ -86,7 +86,7 @@ function OrbitPath() {
     points.push(
       new THREE.Vector3(
         Math.cos(angle) * ORBIT_A,
-        Math.sin(angle * 2) * ORBIT_TILT,
+        Math.sin(angle) * ORBIT_TILT,
         Math.sin(angle) * ORBIT_B
       )
     );
@@ -122,12 +122,14 @@ export function LoginEarthScene() {
       gl={{ antialias: true, alpha: true }}
       style={{ width: "100%", height: "100%" }}
     >
-      {/* Primary sun light — warm, upper-right */}
-      <pointLight position={[3.5, 2.5, 2]} intensity={5} color="#fff3c4" />
-      {/* Deep space ambient — near zero so dark side is dark */}
-      <ambientLight intensity={0.06} />
-      {/* Cool rim light from left for atmosphere edge */}
-      <directionalLight position={[-2.5, 0.5, -1]} intensity={0.35} color="#38bdf8" />
+      {/* Primary sun — strong warm key light */}
+      <pointLight position={[4, 3, 2.5]} intensity={14} color="#fff5d0" />
+      {/* Fill light so lit side is vivid */}
+      <directionalLight position={[2, 1, 3]} intensity={3.5} color="#ffffff" />
+      {/* Ambient — enough to see continents on dark side */}
+      <ambientLight intensity={0.35} />
+      {/* Blue rim from left — atmospheric scatter */}
+      <directionalLight position={[-3, 0.5, -1]} intensity={1.2} color="#38bdf8" />
 
       <Suspense fallback={null}>
         <OrbitalEarth />
