@@ -111,7 +111,8 @@ function LoginPage() {
     if (error) {
       setAuthError(error);
     } else {
-      navigate({ to: "/" });
+      // Full reload ensures beforeLoad session check always passes
+      window.location.href = "/";
     }
   };
 
@@ -136,61 +137,99 @@ function LoginPage() {
       <div className="relative z-10 flex flex-1 flex-col lg:flex-row">
         {/* ── LEFT PANEL ── */}
         <div className="flex flex-1 flex-col items-center justify-between px-8 py-6 lg:items-start lg:px-16">
-          {/* Hero illustration */}
+          {/* Hero illustration — circle + logo stacked together */}
           <div className="w-full max-w-lg">
-            <div className="relative mx-auto lg:mx-0 w-72 h-72 md:w-80 md:h-80 lg:w-[380px] lg:h-[380px]">
-              {/* Outer ambient glow */}
-              <div
-                className="absolute inset-0 rounded-full"
-                style={{
-                  background: "radial-gradient(circle, rgba(56,189,248,0.12) 0%, transparent 70%)",
-                  boxShadow: "0 0 100px rgba(56,189,248,0.25)",
-                }}
-              />
-              {/* 3D cinematic Earth orbiting like around the sun */}
-              <div
-                className="relative z-10 h-full w-full rounded-full overflow-hidden bg-black"
-                style={{
-                  boxShadow:
-                    "0 0 0 2px rgba(56,189,248,0.9), 0 0 30px rgba(56,189,248,0.8), 0 0 80px rgba(56,189,248,0.5), 0 0 160px rgba(56,189,248,0.25), inset 0 0 60px rgba(56,189,248,0.08)",
-                  border: "2px solid rgba(56,189,248,1)",
-                }}
-              >
-                <LoginEarthScene />
-              </div>
-              {/* Inner orbit ring — glowing */}
-              <div
-                className="absolute inset-[-14px] rounded-full animate-spin"
-                style={{
-                  animationDuration: "20s",
-                  border: "1.5px solid rgba(56,189,248,0.5)",
-                  boxShadow: "0 0 12px rgba(56,189,248,0.6), inset 0 0 12px rgba(56,189,248,0.2)",
-                }}
-              />
-              {/* Outer orbit ring — glowing amber, reverse */}
-              <div
-                className="absolute inset-[-28px] rounded-full animate-spin"
-                style={{
-                  animationDuration: "35s",
-                  animationDirection: "reverse",
-                  border: "1px solid rgba(251,191,36,0.45)",
-                  boxShadow: "0 0 16px rgba(251,191,36,0.5), inset 0 0 16px rgba(251,191,36,0.15)",
-                }}
-              />
-            </div>
+            {/* Wrapper: extra bottom padding so logo overlaps nicely */}
+            <div className="relative mx-auto lg:mx-0 w-72 md:w-80 lg:w-[380px]" style={{ paddingBottom: "60px" }}>
 
-            {/* OPOAD Brand */}
-            <div className="mt-6 flex flex-col items-center lg:items-start">
-              <img
-                src="/opoad-logo-transparent.png"
-                alt="OPOAD"
-                className="h-20 w-auto object-contain"
-                style={{
-                  mixBlendMode: "screen",
-                  filter:
-                    "brightness(2.5) contrast(1.2) drop-shadow(0 0 30px rgba(56,189,248,1)) drop-shadow(0 0 60px rgba(56,189,248,0.8)) drop-shadow(0 0 90px rgba(251,191,36,0.5))",
-                }}
-              />
+              {/* ── Circle section ── */}
+              <div className="relative w-full" style={{ aspectRatio: "1 / 1" }}>
+                {/* Wide ambient glow behind everything */}
+                <div
+                  className="absolute rounded-full pointer-events-none"
+                  style={{
+                    inset: "-40px",
+                    background: "radial-gradient(circle, rgba(56,189,248,0.18) 0%, rgba(56,189,248,0.06) 40%, transparent 70%)",
+                    filter: "blur(8px)",
+                  }}
+                />
+
+                {/* Illusion ring 4 — outermost, slow amber */}
+                <div
+                  className="absolute rounded-full animate-spin pointer-events-none"
+                  style={{
+                    inset: "-48px",
+                    animationDuration: "60s",
+                    animationDirection: "reverse",
+                    border: "1px dashed rgba(251,191,36,0.18)",
+                    boxShadow: "0 0 20px rgba(251,191,36,0.12)",
+                  }}
+                />
+
+                {/* Illusion ring 3 — large blue pulse ring */}
+                <div
+                  className="absolute rounded-full animate-spin pointer-events-none"
+                  style={{
+                    inset: "-32px",
+                    animationDuration: "40s",
+                    background: "transparent",
+                    border: "1px solid transparent",
+                    boxShadow: "0 0 0 1px rgba(56,189,248,0.22), 0 0 24px rgba(56,189,248,0.18)",
+                  }}
+                />
+
+                {/* Illusion ring 2 — close amber reverse */}
+                <div
+                  className="absolute rounded-full animate-spin pointer-events-none"
+                  style={{
+                    inset: "-18px",
+                    animationDuration: "28s",
+                    animationDirection: "reverse",
+                    border: "1.5px solid rgba(251,191,36,0.5)",
+                    boxShadow: "0 0 18px rgba(251,191,36,0.55), inset 0 0 18px rgba(251,191,36,0.1)",
+                  }}
+                />
+
+                {/* Illusion ring 1 — tight bright blue */}
+                <div
+                  className="absolute rounded-full animate-spin pointer-events-none"
+                  style={{
+                    inset: "-8px",
+                    animationDuration: "16s",
+                    border: "2px solid rgba(56,189,248,0.8)",
+                    boxShadow: "0 0 20px rgba(56,189,248,0.9), 0 0 40px rgba(56,189,248,0.45), inset 0 0 20px rgba(56,189,248,0.15)",
+                  }}
+                />
+
+                {/* Main circle — Earth scene, dark-blue inner glow (not pitch black) */}
+                <div
+                  className="relative z-10 h-full w-full rounded-full overflow-hidden"
+                  style={{
+                    background: "radial-gradient(circle at 40% 40%, #0a1e3a 0%, #050d1a 55%, #000 100%)",
+                    boxShadow:
+                      "0 0 0 2px rgba(56,189,248,0.95), 0 0 40px rgba(56,189,248,0.7), 0 0 100px rgba(56,189,248,0.35)",
+                    border: "2px solid rgba(56,189,248,1)",
+                  }}
+                >
+                  <LoginEarthScene />
+                </div>
+              </div>
+
+              {/* ── Logo — anchored at bottom of circle, centred, overlapping the glowing border ── */}
+              <div
+                className="absolute left-0 right-0 flex justify-center"
+                style={{ bottom: "0px" }}
+              >
+                <img
+                  src="/opoad-logo-transparent.png"
+                  alt="OPOAD"
+                  className="h-16 w-auto object-contain"
+                  style={{
+                    filter:
+                      "brightness(2.2) contrast(1.1) drop-shadow(0 0 22px rgba(56,189,248,0.95)) drop-shadow(0 0 50px rgba(56,189,248,0.6)) drop-shadow(0 0 6px rgba(255,255,255,0.8))",
+                  }}
+                />
+              </div>
             </div>
 
             {/* Welcome text */}
@@ -323,6 +362,7 @@ function LoginPage() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                 placeholder="Enter your email"
                 className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-4 text-sm text-white placeholder-white/30 outline-none transition-all focus:border-sky-400/50 focus:bg-white/8 focus:ring-1 focus:ring-sky-400/20"
               />
@@ -335,6 +375,7 @@ function LoginPage() {
                 type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
                 placeholder="Enter your password"
                 className="w-full rounded-xl border border-white/10 bg-white/5 py-3 pl-11 pr-11 text-sm text-white placeholder-white/30 outline-none transition-all focus:border-sky-400/50 focus:bg-white/8 focus:ring-1 focus:ring-sky-400/20"
               />
