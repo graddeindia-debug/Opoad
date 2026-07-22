@@ -1,19 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import {
-  Eye,
-  EyeOff,
-  Mail,
-  Lock,
-  Globe,
-  ChevronDown,
-  ArrowRight,
-  Shield,
-  Brain,
-  Zap,
-  Rocket,
-  Loader2,
-} from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, Globe, ChevronDown, ArrowRight, Shield, Brain, Zap, Rocket, Loader as Loader2 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
 export const Route = createFileRoute("/login")({

@@ -1,7 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect, useCallback } from "react";
 import { TopNav } from "@/components/dashboard/TopNav";
-import { Plus, Trash2, Edit2, ArrowLeft, LogOut } from "lucide-react";
+import { Plus, Trash2, CreditCard as Edit2, ArrowLeft, LogOut } from "lucide-react";
 import { supabase, type Project } from "@/lib/supabase";
 import { useAuth } from "@/lib/auth";
 
