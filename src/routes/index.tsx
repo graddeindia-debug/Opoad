@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect, useState, useRef } from "react";
 import {
   Bot,
@@ -37,6 +37,8 @@ import { Button } from "@/components/ui/button";
 import { ErrorBoundary } from "@/components/dashboard/ErrorBoundary";
 import { DescribeBox } from "@/components/dashboard/DescribeBox";
 import { AiProcessingOverlay } from "@/components/dashboard/AiProcessingOverlay";
+import { useAuth } from "@/lib/auth";
+import { supabase } from "@/lib/supabase";
 import {
   Dialog,
   DialogContent,
@@ -65,6 +67,12 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
+  beforeLoad: async () => {
+    const { data } = await supabase.auth.getSession();
+    if (!data.session) {
+      throw redirect({ to: "/login" });
+    }
+  },
   component: DashboardRoute,
 });
 
@@ -88,9 +96,48 @@ type DashboardModule = {
 };
 
 const LEFT: DashboardModule[] = [
-  { icon: Bot, title: "AI Assistant", description: "Conversational reasoning core." },
-  { icon: FolderKanban, title: "Projects", description: "Active initiatives orchestration." },
-  { icon: Workflow, title: "Automation", description: "Autonomous task workflows." },
+  {
+    icon: Bot,
+    title: "AI Assistant",
+    description: "Conversational reasoning core.",
+    detail: {
+      title: "AI Assistant",
+      description: "Conversational Reasoning Core",
+      summary:
+        "The AI Assistant is your direct interface to the OPOAD intelligence engine. Ask questions, request analysis, or generate content using natural language.",
+      accent: "Conversational AI",
+      icon: Bot,
+      tabs: ["Chat", "Context Memory", "Agent Config"],
+    },
+  },
+  {
+    icon: FolderKanban,
+    title: "Projects",
+    description: "Active initiatives orchestration.",
+    detail: {
+      title: "Projects",
+      description: "Active Initiatives Orchestration",
+      summary:
+        "Manage all active projects, track progress, and coordinate teams. Create, edit, and monitor initiatives from a single command center.",
+      accent: "Project management",
+      icon: FolderKanban,
+      shortcuts: ["Create New Project", "View All Projects", "Archive Completed"],
+    },
+  },
+  {
+    icon: Workflow,
+    title: "Automation",
+    description: "Autonomous task workflows.",
+    detail: {
+      title: "Automation",
+      description: "Autonomous Task Workflows",
+      summary:
+        "Build and deploy automated workflows that run autonomously. Chain AI agents, triggers, and actions to eliminate repetitive work.",
+      accent: "Workflow automation",
+      icon: Workflow,
+      tabs: ["Active Workflows", "Templates", "Trigger Builder"],
+    },
+  },
   {
     icon: Microscope,
     title: "Research",
@@ -106,9 +153,48 @@ const LEFT: DashboardModule[] = [
       tabs: ["Market Analysis", "Competitor Reports", "Generate Synthesis"],
     },
   },
-  { icon: BarChart3, title: "Analytics", description: "Real-time telemetry engine." },
-  { icon: Wallet, title: "Finance", description: "Treasury & capital flows." },
-  { icon: Shield, title: "Security", description: "Zero-trust perimeter shield." },
+  {
+    icon: BarChart3,
+    title: "Analytics",
+    description: "Real-time telemetry engine.",
+    detail: {
+      title: "Analytics",
+      description: "Real-time Telemetry Engine",
+      summary:
+        "Monitor live system metrics, user engagement, and operational KPIs. Visualize trends and receive automated insight reports.",
+      accent: "Data analytics",
+      icon: BarChart3,
+      tabs: ["Overview", "Traffic", "Conversions", "Real-time"],
+    },
+  },
+  {
+    icon: Wallet,
+    title: "Finance",
+    description: "Treasury & capital flows.",
+    detail: {
+      title: "Finance",
+      description: "Treasury & Capital Flows",
+      summary:
+        "Track revenue, expenses, and capital allocation. Generate financial reports and forecast cash flow with AI-assisted projections.",
+      accent: "Financial intelligence",
+      icon: Wallet,
+      tabs: ["Overview", "Transactions", "Forecasting"],
+    },
+  },
+  {
+    icon: Shield,
+    title: "Security",
+    description: "Zero-trust perimeter shield.",
+    detail: {
+      title: "Security",
+      description: "Zero-Trust Perimeter Shield",
+      summary:
+        "Monitor threats, audit access logs, and enforce zero-trust security policies across all OPOAD services and endpoints.",
+      accent: "Security operations",
+      icon: Shield,
+      tabs: ["Threat Map", "Access Logs", "Policy Engine"],
+    },
+  },
   {
     icon: ImageIcon,
     title: "Media",
@@ -139,15 +225,93 @@ const LEFT: DashboardModule[] = [
       tabs: ["Script-to-Video Generator", "Automated Thumbnail Creator"],
     },
   },
-  { icon: Cloud, title: "Cloud", description: "Distributed compute grid." },
+  {
+    icon: Cloud,
+    title: "Cloud",
+    description: "Distributed compute grid.",
+    detail: {
+      title: "Cloud",
+      description: "Distributed Compute Grid",
+      summary:
+        "Manage cloud infrastructure, scale compute resources, and monitor node health across the global OPOAD distribution network.",
+      accent: "Cloud infrastructure",
+      icon: Cloud,
+      tabs: ["Nodes", "Scaling", "Health Monitor"],
+    },
+  },
 ];
 
 const RIGHT: DashboardModule[] = [
-  { icon: BookOpen, title: "Knowledge Base", description: "Persistent memory vault." },
-  { icon: Megaphone, title: "Marketing", description: "Attention orchestration." },
-  { icon: TrendingUp, title: "Sales", description: "Revenue intelligence." },
-  { icon: Users, title: "HR", description: "Talent operating layer." },
-  { icon: PiggyBank, title: "Investments", description: "Portfolio intelligence." },
+  {
+    icon: BookOpen,
+    title: "Knowledge Base",
+    description: "Persistent memory vault.",
+    detail: {
+      title: "Knowledge Base",
+      description: "Persistent Memory Vault",
+      summary:
+        "A searchable repository of accumulated knowledge, documents, and AI-generated insights. The system remembers and learns from every interaction.",
+      accent: "Knowledge management",
+      icon: BookOpen,
+      tabs: ["Documents", "AI Insights", "Search"],
+    },
+  },
+  {
+    icon: Megaphone,
+    title: "Marketing",
+    description: "Attention orchestration.",
+    detail: {
+      title: "Marketing",
+      description: "Attention Orchestration",
+      summary:
+        "Plan, launch, and track marketing campaigns across channels. AI-powered audience targeting and content scheduling.",
+      accent: "Marketing automation",
+      icon: Megaphone,
+      tabs: ["Campaigns", "Audience", "Scheduler"],
+    },
+  },
+  {
+    icon: TrendingUp,
+    title: "Sales",
+    description: "Revenue intelligence.",
+    detail: {
+      title: "Sales",
+      description: "Revenue Intelligence",
+      summary:
+        "Track pipeline, forecast revenue, and identify high-value opportunities with AI-assisted lead scoring and conversion analytics.",
+      accent: "Sales intelligence",
+      icon: TrendingUp,
+      tabs: ["Pipeline", "Forecast", "Leads"],
+    },
+  },
+  {
+    icon: Users,
+    title: "HR",
+    description: "Talent operating layer.",
+    detail: {
+      title: "HR",
+      description: "Talent Operating Layer",
+      summary:
+        "Manage team members, roles, and performance. AI-assisted recruitment, onboarding, and workforce analytics.",
+      accent: "Human resources",
+      icon: Users,
+      tabs: ["Team", "Roles", "Performance"],
+    },
+  },
+  {
+    icon: PiggyBank,
+    title: "Investments",
+    description: "Portfolio intelligence.",
+    detail: {
+      title: "Investments",
+      description: "Portfolio Intelligence",
+      summary:
+        "Monitor investment portfolios, track asset performance, and receive AI-generated risk assessments and allocation recommendations.",
+      accent: "Investment intelligence",
+      icon: PiggyBank,
+      tabs: ["Portfolio", "Risk Analysis", "Allocations"],
+    },
+  },
   {
     icon: Scale,
     title: "Legal",
@@ -167,10 +331,62 @@ const RIGHT: DashboardModule[] = [
       ],
     },
   },
-  { icon: Code2, title: "Developer Hub", description: "Build environments." },
-  { icon: Plug, title: "API Center", description: "Integration mesh." },
-  { icon: MessageSquare, title: "Community", description: "Signal & discourse." },
-  { icon: Globe2, title: "Global Network", description: "Planetary presence." },
+  {
+    icon: Code2,
+    title: "Developer Hub",
+    description: "Build environments.",
+    detail: {
+      title: "Developer Hub",
+      description: "Build Environments",
+      summary:
+        "Access development tools, manage build pipelines, and deploy code. AI-assisted code review and debugging.",
+      accent: "Developer tools",
+      icon: Code2,
+      tabs: ["Pipelines", "Environments", "Code Review"],
+    },
+  },
+  {
+    icon: Plug,
+    title: "API Center",
+    description: "Integration mesh.",
+    detail: {
+      title: "API Center",
+      description: "Integration Mesh",
+      summary:
+        "Manage API keys, webhooks, and third-party integrations. Monitor API health and usage analytics.",
+      accent: "API management",
+      icon: Plug,
+      tabs: ["Keys", "Webhooks", "Health"],
+    },
+  },
+  {
+    icon: MessageSquare,
+    title: "Community",
+    description: "Signal & discourse.",
+    detail: {
+      title: "Community",
+      description: "Signal & Discourse",
+      summary:
+        "Engage with the OPOAD community. Track discussions, feedback, and user-generated content across the platform.",
+      accent: "Community management",
+      icon: MessageSquare,
+      tabs: ["Discussions", "Feedback", "Moderation"],
+    },
+  },
+  {
+    icon: Globe2,
+    title: "Global Network",
+    description: "Planetary presence.",
+    detail: {
+      title: "Global Network",
+      description: "Planetary Presence",
+      summary:
+        "Monitor global server distribution, latency maps, and regional compliance. Manage CDN and edge node configuration.",
+      accent: "Global infrastructure",
+      icon: Globe2,
+      tabs: ["World Map", "Latency", "Compliance"],
+    },
+  },
 ];
 
 export interface ResearchNewsItem {
@@ -261,6 +477,7 @@ function DashboardRoute() {
 }
 
 function Dashboard() {
+  const navigate = useNavigate();
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [activeModule, setActiveModule] = useState<ModuleDetail | null>(null);
 
@@ -495,7 +712,17 @@ function Dashboard() {
                 key={m.title}
                 {...m}
                 delay={0.05 * i}
-                onOpenDetails={m.detail ? () => setActiveModule(m.detail ?? null) : undefined}
+                onOpenDetails={
+                  m.detail
+                    ? () => {
+                        if (m.title === "Projects") {
+                          navigate({ to: "/projects" });
+                        } else {
+                          setActiveModule(m.detail ?? null);
+                        }
+                      }
+                    : undefined
+                }
               />
             ))}
           </section>
@@ -606,7 +833,17 @@ function Dashboard() {
                 key={m.title}
                 {...m}
                 delay={0.05 * i + 0.15}
-                onOpenDetails={m.detail ? () => setActiveModule(m.detail ?? null) : undefined}
+                onOpenDetails={
+                  m.detail
+                    ? () => {
+                        if (m.title === "Projects") {
+                          navigate({ to: "/projects" });
+                        } else {
+                          setActiveModule(m.detail ?? null);
+                        }
+                      }
+                    : undefined
+                }
               />
             ))}
           </section>

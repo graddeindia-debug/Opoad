@@ -18,8 +18,10 @@ import {
   Cpu,
   Check,
   Zap,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { processAiQuery } from "@/lib/ai.functions";
 
 interface DescribeBoxProps {
   onGenerateScript: (title: string, description: string) => void;
@@ -38,6 +40,9 @@ export function DescribeBox({
   const [isTyping, setIsTyping] = useState(false);
   const [deepThinkActive, setDeepThinkActive] = useState(false);
   const [researchActive, setResearchActive] = useState(false);
+  const [aiResponse, setAiResponse] = useState<string | null>(null);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState<string | null>(null);
 
   // Mouse coordinates for 3D holographic tilt
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -245,17 +250,35 @@ export function DescribeBox({
     stopCamera();
   };
 
-  const handleSendQuery = () => {
-    if (!inputValue.trim()) return;
+  const handleSendQuery = async () => {
+    const query = inputValue.trim();
+    if (!query) return;
 
-    if (selectedNewsArticle) {
-      onGenerateScript(selectedNewsArticle.title, selectedNewsArticle.description);
-    } else {
-      onGenerateScript("Custom AI Generated Campaign", inputValue);
+    setAiLoading(true);
+    setAiError(null);
+    setAiResponse(null);
+
+    try {
+      const result = await processAiQuery({
+        data: {
+          query,
+          deepThink: deepThinkActive,
+          researchMode: researchActive,
+        },
+      });
+      setAiResponse(result.response);
+
+      if (selectedNewsArticle) {
+        onGenerateScript(selectedNewsArticle.title, selectedNewsArticle.description);
+      }
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "AI processing failed. Please try again.";
+      setAiError(msg);
+    } finally {
+      setAiLoading(false);
+      setInputValue("");
+      if (onClearArticle) onClearArticle();
     }
-
-    setInputValue("");
-    if (onClearArticle) onClearArticle();
   };
 
   return (
@@ -611,24 +634,33 @@ export function DescribeBox({
                 /* Primary Highlighted Action for News Wire Card interaction */
                 <Button
                   onClick={handleSendQuery}
-                  className="bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold px-4 py-2 rounded-2xl flex items-center gap-1.5 shadow-[0_0_20px_rgba(0,217,255,0.45)] border border-cyan-300 transition duration-300 scale-105 active:scale-95 cursor-pointer"
+                  disabled={aiLoading}
+                  className="bg-cyan-500 hover:bg-cyan-400 text-black font-extrabold px-4 py-2 rounded-2xl flex items-center gap-1.5 shadow-[0_0_20px_rgba(0,217,255,0.45)] border border-cyan-300 transition duration-300 scale-105 active:scale-95 cursor-pointer disabled:opacity-60 disabled:scale-100"
                 >
-                  <Sparkles size={13} className="text-black animate-bounce" />
-                  <span>SYNTHESIZE CAMPAIGN</span>
+                  {aiLoading ? (
+                    <Loader2 size={13} className="text-black animate-spin" />
+                  ) : (
+                    <Sparkles size={13} className="text-black animate-bounce" />
+                  )}
+                  <span>{aiLoading ? "PROCESSING" : "SYNTHESIZE CAMPAIGN"}</span>
                 </Button>
               ) : (
                 /* Default Futuristic Send Action button */
                 <button
                   onClick={handleSendQuery}
-                  disabled={!inputValue.trim()}
+                  disabled={!inputValue.trim() || aiLoading}
                   className={`w-10 h-10 rounded-full flex items-center justify-center border transition-all duration-300 ${
-                    inputValue.trim()
+                    inputValue.trim() && !aiLoading
                       ? "bg-cyan-500 border-cyan-400 text-black hover:bg-cyan-400 hover:shadow-[0_0_15px_rgba(0,217,255,0.5)] cursor-pointer"
                       : "bg-slate-900 border-slate-800/85 text-slate-600 cursor-not-allowed"
                   }`}
                   title="Inject Signal"
                 >
-                  <ArrowUp size={18} strokeWidth={2.5} />
+                  {aiLoading ? (
+                    <Loader2 size={18} strokeWidth={2.5} className="animate-spin" />
+                  ) : (
+                    <ArrowUp size={18} strokeWidth={2.5} />
+                  )}
                 </button>
               )}
             </div>
@@ -658,6 +690,57 @@ export function DescribeBox({
           ))}
         </div>
       </div>
+
+      {/* AI Response Display */}
+      {(aiLoading || aiError || aiResponse) && (
+        <div className="w-[94%] sm:w-[90%] z-10">
+          <div className="rounded-2xl border border-cyan-500/20 bg-[#05070A]/70 backdrop-blur-md p-4 animate-fade-in">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-500" />
+                </span>
+                <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-cyan-300">
+                  AI Core Response
+                </span>
+              </div>
+              {aiResponse && (
+                <button
+                  onClick={() => setAiResponse(null)}
+                  className="text-slate-500 hover:text-slate-300 transition"
+                >
+                  <X size={14} />
+                </button>
+              )}
+            </div>
+
+            {aiLoading && (
+              <div className="flex items-center gap-3 py-6 text-slate-400">
+                <Loader2 size={18} className="animate-spin text-cyan-400" />
+                <span className="text-xs font-mono">
+                  {deepThinkActive ? "Deep reasoning engaged" : "Processing"} query via OPOAD AI
+                  core...
+                </span>
+              </div>
+            )}
+
+            {aiError && !aiLoading && (
+              <div className="rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs text-red-400">
+                {aiError}
+              </div>
+            )}
+
+            {aiResponse && !aiLoading && (
+              <div className="max-h-[280px] overflow-y-auto pr-2">
+                <p className="text-xs text-slate-200 leading-relaxed whitespace-pre-wrap font-mono">
+                  {aiResponse}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* INBUILT CUSTOM SCAN CAMERA OVERLAY (Redesigned with Glassmorphism) */}
       {cameraOpen && (

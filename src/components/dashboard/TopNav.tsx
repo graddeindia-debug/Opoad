@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-import { Bell, Settings as SettingsIcon, User } from "lucide-react";
+import { Bell, Settings as SettingsIcon, LogOut } from "lucide-react";
+import { useAuth } from "@/lib/auth";
+import { useNavigate } from "@tanstack/react-router";
 
 interface Props {
   onOpenSettings: () => void;
@@ -7,6 +9,8 @@ interface Props {
 
 export function TopNav({ onOpenSettings }: Props) {
   const [time, setTime] = useState<string | null>(null);
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const tick = () =>
@@ -15,6 +19,12 @@ export function TopNav({ onOpenSettings }: Props) {
     const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
+
+  const handleSignOut = async () => {
+    await signOut();
+    navigate({ to: "/login" });
+  };
+
   return (
     <header className="pointer-events-auto flex items-center justify-between px-6 py-4">
       <div className="flex flex-col items-start gap-0.5">
@@ -51,7 +61,7 @@ export function TopNav({ onOpenSettings }: Props) {
           <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">
             Founder
           </p>
-          <p className="text-sm font-medium text-foreground">Commander</p>
+          <p className="text-sm font-medium text-foreground">{user?.email ?? "Commander"}</p>
         </div>
         <button
           onClick={onOpenSettings}
@@ -60,14 +70,26 @@ export function TopNav({ onOpenSettings }: Props) {
         >
           <SettingsIcon size={16} strokeWidth={1.5} />
         </button>
-        {[Bell, User].map((Icon, i) => (
-          <button
-            key={i}
-            className="glass group flex h-11 w-11 items-center justify-center rounded-xl text-foreground/80 transition-all hover:text-primary hover:shadow-[0_0_20px_var(--color-glow)]"
-          >
-            <Icon size={16} strokeWidth={1.5} />
-          </button>
-        ))}
+        <button
+          onClick={() => {
+            // Bell — scroll to news wire section
+            const newsSection = document.querySelector("[data-news-wire]");
+            if (newsSection) {
+              newsSection.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+          }}
+          aria-label="View notifications"
+          className="glass group flex h-11 w-11 items-center justify-center rounded-xl text-foreground/80 transition-all hover:text-primary hover:shadow-[0_0_20px_var(--color-glow)]"
+        >
+          <Bell size={16} strokeWidth={1.5} />
+        </button>
+        <button
+          onClick={handleSignOut}
+          aria-label="Sign out"
+          className="glass group flex h-11 w-11 items-center justify-center rounded-xl text-foreground/80 transition-all hover:text-primary hover:shadow-[0_0_20px_var(--color-glow)]"
+        >
+          <LogOut size={16} strokeWidth={1.5} />
+        </button>
       </div>
     </header>
   );

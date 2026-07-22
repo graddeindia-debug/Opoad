@@ -98,6 +98,57 @@ All text in the generated ideas should strictly respect the requested language (
     }
   });
 
+export interface AiQueryResult {
+  response: string;
+}
+
+// Server function to process a free-form prompt/query from the Describe Box
+export const processAiQuery = createServerFn({ method: "POST" })
+  .validator(
+    (data: { query: string; deepThink?: boolean; researchMode?: boolean }) => data,
+  )
+  .handler(async ({ data }) => {
+    try {
+      const ai = getGeminiClient();
+
+      const modeInstructions = [
+        data.researchMode
+          ? "Engage deep research mode: cross-reference evidence, cite specific data points, and provide structured analytical insights."
+          : "",
+        data.deepThink
+          ? "Engage deep reasoning mode: think step-by-step, evaluate multiple perspectives, and provide a thorough, well-structured response."
+          : "",
+      ]
+        .filter(Boolean)
+        .join(" ");
+
+      const prompt = `You are the OPOAD AI Operating System core — an advanced intelligence, automation, and content creation engine.
+
+User Query:
+${data.query}
+
+${modeInstructions}
+
+Respond with a clear, structured, and actionable answer. If the query asks for a script, format it with [HOOK], [BODY], and [OUTRO] sections. If it asks for research, provide structured bullet points with key findings. If it asks for analysis, give a concise executive summary followed by detailed breakdown. Always be professional and insightful.`;
+
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
+
+      const text = response.text;
+      if (!text) {
+        throw new Error("Empty response received from AI service");
+      }
+
+      return { response: text };
+    } catch (error: unknown) {
+      console.error("[processAiQuery] Server function error:", error);
+      const errMsg = error instanceof Error ? error.message : "Failed to process AI query.";
+      throw new Error(errMsg);
+    }
+  });
+
 // Server function to generate a detailed, structured creator script
 export const generateScript = createServerFn({ method: "POST" })
   .validator(
