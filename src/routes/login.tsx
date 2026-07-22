@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
+import { LoginEarthScene } from "@/components/dashboard/LoginEarthScene";
 import { Eye, EyeOff, Mail, Lock, Globe, ChevronDown, ArrowRight, Shield, Brain, Zap, Rocket, Loader as Loader2 } from "lucide-react";
 import { useAuth } from "@/lib/auth";
 
@@ -146,31 +147,15 @@ function LoginPage() {
                   boxShadow: "0 0 100px rgba(56,189,248,0.25)",
                 }}
               />
-              {/* Black circle with rotating OPOAD logo */}
+              {/* 3D cinematic Earth orbiting like around the sun */}
               <div
-                className="relative z-10 h-full w-full rounded-full bg-black flex items-center justify-center animate-spin"
+                className="relative z-10 h-full w-full rounded-full overflow-hidden bg-black"
                 style={{
-                  animationDuration: "18s",
-                  animationTimingFunction: "linear",
                   boxShadow: "0 0 60px rgba(56,189,248,0.3), 0 0 120px rgba(56,189,248,0.12), inset 0 0 40px rgba(56,189,248,0.05)",
                   border: "1px solid rgba(56,189,248,0.3)",
                 }}
               >
-                {/* Counter-rotate logo so it stays upright while circle spins */}
-                <div
-                  className="animate-spin flex items-center justify-center w-3/4"
-                  style={{ animationDuration: "18s", animationTimingFunction: "linear", animationDirection: "reverse" }}
-                >
-                  <img
-                    src="/opoad-logo.png"
-                    alt="OPOAD"
-                    className="w-full object-contain"
-                    style={{
-                      filter: "brightness(2) contrast(1.2) drop-shadow(0 0 24px rgba(56,189,248,1)) drop-shadow(0 0 50px rgba(56,189,248,0.7)) drop-shadow(0 0 80px rgba(251,191,36,0.4))",
-                      mixBlendMode: "screen",
-                    }}
-                  />
-                </div>
+                <LoginEarthScene />
               </div>
               {/* Inner orbit ring — glowing */}
               <div
