@@ -33,33 +33,48 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) {
-      // Make common errors more user-friendly
-      if (error.message.toLowerCase().includes("invalid login credentials")) {
-        return { error: "Email ya password galat hai. Pehle 'Create Account' karein agar account nahi hai." };
+    try {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        if (error.message.toLowerCase().includes("invalid login credentials")) {
+          return { error: "Email ya password galat hai. Pehle 'Create Account' karein agar account nahi hai." };
+        }
+        if (error.message.toLowerCase().includes("email not confirmed")) {
+          return { error: "Email confirm nahi hua — apna inbox check karein aur confirmation link pe click karein, phir wapas Sign In karein." };
+        }
+        return { error: error.message };
       }
-      if (error.message.toLowerCase().includes("email not confirmed")) {
-        return { error: "Email confirm nahi hua — apna inbox check karein aur confirmation link pe click karein." };
+      return { error: null };
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      if (msg.toLowerCase().includes("fetch") || msg.toLowerCase().includes("network")) {
+        return { error: "⚠️ Database se connect nahi ho pa raha. Supabase project paused/deleted ho sakta hai — supabase.com/dashboard pe jaake project resume karein, phir naye URL & Key Replit Secrets mein update karein." };
       }
-      return { error: error.message };
+      return { error: msg };
     }
-    return { error: null };
   };
 
   const signUp = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if (error) {
-      if (error.message.toLowerCase().includes("already registered")) {
-        return { error: "Yeh email already registered hai — Sign In karein.", needsConfirmation: false };
+    try {
+      const { data, error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        if (error.message.toLowerCase().includes("already registered")) {
+          return { error: "Yeh email already registered hai — Sign In karein.", needsConfirmation: false };
+        }
+        return { error: error.message, needsConfirmation: false };
       }
-      return { error: error.message, needsConfirmation: false };
+      // Session null means email confirmation is required
+      if (data.user && !data.session) {
+        return { error: null, needsConfirmation: true };
+      }
+      return { error: null, needsConfirmation: false };
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e);
+      if (msg.toLowerCase().includes("fetch") || msg.toLowerCase().includes("network")) {
+        return { error: "⚠️ Database se connect nahi ho pa raha. Supabase project paused/deleted ho sakta hai — supabase.com/dashboard pe jaake project resume karein.", needsConfirmation: false };
+      }
+      return { error: msg, needsConfirmation: false };
     }
-    // Session null means email confirmation is required
-    if (data.user && !data.session) {
-      return { error: null, needsConfirmation: true };
-    }
-    return { error: null, needsConfirmation: false };
   };
 
   const signOut = async () => {
