@@ -98,21 +98,39 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [authError, setAuthError] = useState<string | null>(null);
+  const [authSuccess, setAuthSuccess] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
 
   const handleSubmit = async () => {
     if (!email.trim() || !password.trim()) return;
     setAuthError(null);
+    setAuthSuccess(null);
     setSubmitting(true);
-    const fn = isSignUp ? signUp : signIn;
-    const { error } = await fn(email.trim(), password);
-    setSubmitting(false);
-    if (error) {
-      setAuthError(error);
+
+    if (isSignUp) {
+      const { error, needsConfirmation } = await signUp(email.trim(), password);
+      setSubmitting(false);
+      if (error) {
+        setAuthError(error);
+      } else if (needsConfirmation) {
+        // Email confirmation required — tell user to check inbox
+        setAuthSuccess(
+          `✅ Account bana diya! ${email.trim()} pe confirmation email bheja gaya hai. Email open karein aur link pe click karein, phir Sign In karein.`
+        );
+        setIsSignUp(false); // Switch to sign-in mode
+      } else {
+        // Auto-confirmed (rare) — go to dashboard
+        navigate({ to: "/" });
+      }
     } else {
-      // Full reload ensures beforeLoad session check always passes
-      window.location.href = "/";
+      const { error } = await signIn(email.trim(), password);
+      setSubmitting(false);
+      if (error) {
+        setAuthError(error);
+      } else {
+        navigate({ to: "/" });
+      }
     }
   };
 
@@ -403,9 +421,16 @@ function LoginPage() {
               </button>
             </div>
 
+            {/* Success message (e.g. email confirmation sent) */}
+            {authSuccess && (
+              <div className="mb-3 rounded-lg border border-green-500/40 bg-green-500/10 px-4 py-3 text-xs text-green-400 leading-relaxed">
+                {authSuccess}
+              </div>
+            )}
+
             {/* Error message */}
             {authError && (
-              <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-2.5 text-xs text-red-400">
+              <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs text-red-400 leading-relaxed">
                 {authError}
               </div>
             )}

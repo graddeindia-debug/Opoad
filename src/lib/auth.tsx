@@ -7,7 +7,7 @@ interface AuthContextValue {
   user: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
-  signUp: (email: string, password: string) => Promise<{ error: string | null }>;
+  signUp: (email: string, password: string) => Promise<{ error: string | null; needsConfirmation?: boolean }>;
   signOut: () => Promise<void>;
 }
 
@@ -34,12 +34,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     const { error } = await supabase.auth.signInWithPassword({ email, password });
-    return { error: error?.message ?? null };
+    if (error) {
+      // Make common errors more user-friendly
+      if (error.message.toLowerCase().includes("invalid login credentials")) {
+        return { error: "Email ya password galat hai. Pehle 'Create Account' karein agar account nahi hai." };
+      }
+      if (error.message.toLowerCase().includes("email not confirmed")) {
+        return { error: "Email confirm nahi hua — apna inbox check karein aur confirmation link pe click karein." };
+      }
+      return { error: error.message };
+    }
+    return { error: null };
   };
 
   const signUp = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signUp({ email, password });
-    return { error: error?.message ?? null };
+    const { data, error } = await supabase.auth.signUp({ email, password });
+    if (error) {
+      if (error.message.toLowerCase().includes("already registered")) {
+        return { error: "Yeh email already registered hai — Sign In karein.", needsConfirmation: false };
+      }
+      return { error: error.message, needsConfirmation: false };
+    }
+    // Session null means email confirmation is required
+    if (data.user && !data.session) {
+      return { error: null, needsConfirmation: true };
+    }
+    return { error: null, needsConfirmation: false };
   };
 
   const signOut = async () => {
