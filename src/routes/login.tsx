@@ -137,10 +137,10 @@ function LoginPage() {
       <div className="relative z-10 flex flex-1 flex-col lg:flex-row">
         {/* ── LEFT PANEL ── */}
         <div className="flex flex-1 flex-col items-center justify-between px-8 py-6 lg:items-start lg:px-16">
-          {/* Hero illustration — circle + logo stacked together */}
+          {/* Hero illustration — circle then logo then welcome, clean stack */}
           <div className="w-full max-w-lg">
-            {/* Wrapper: extra bottom padding so logo overlaps nicely */}
-            <div className="relative mx-auto lg:mx-0 w-72 md:w-80 lg:w-[380px]" style={{ paddingBottom: "60px" }}>
+            {/* glowing-circle wrapper — margin-bottom: 24px after circle */}
+            <div className="relative mx-auto lg:mx-0 w-72 md:w-80 lg:w-[380px]" style={{ marginBottom: "24px" }}>
 
               {/* ── Circle section ── */}
               <div className="relative w-full" style={{ aspectRatio: "1 / 1" }}>
@@ -215,25 +215,24 @@ function LoginPage() {
                 </div>
               </div>
 
-              {/* ── Logo — anchored at bottom of circle, centred, overlapping the glowing border ── */}
-              <div
-                className="absolute left-0 right-0 flex justify-center"
-                style={{ bottom: "0px" }}
-              >
-                <img
-                  src="/opoad-logo-transparent.png"
-                  alt="OPOAD"
-                  className="h-16 w-auto object-contain"
-                  style={{
-                    filter:
-                      "brightness(2.2) contrast(1.1) drop-shadow(0 0 22px rgba(56,189,248,0.95)) drop-shadow(0 0 50px rgba(56,189,248,0.6)) drop-shadow(0 0 6px rgba(255,255,255,0.8))",
-                  }}
-                />
-              </div>
+            </div>
+
+            {/* opoad-logo — height:32px, separate from circle, margin-bottom:16px before welcome */}
+            <div className="flex justify-center lg:justify-start" style={{ marginBottom: "16px" }}>
+              <img
+                src="/opoad-logo-transparent.png"
+                alt="OPOAD"
+                className="w-auto object-contain"
+                style={{
+                  height: "32px",
+                  filter:
+                    "brightness(2.0) contrast(1.1) drop-shadow(0 0 16px rgba(56,189,248,0.95)) drop-shadow(0 0 32px rgba(56,189,248,0.55)) drop-shadow(0 0 4px rgba(255,255,255,0.7))",
+                }}
+              />
             </div>
 
             {/* Welcome text */}
-            <div className="mt-6 text-center lg:text-left">
+            <div className="text-center lg:text-left">
               <h2 className="text-2xl font-semibold text-white">
                 Welcome to{" "}
                 <span
