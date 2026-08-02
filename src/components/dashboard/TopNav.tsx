@@ -29,12 +29,12 @@ export function TopNav({ onOpenSettings }: Props) {
     <header className="pointer-events-auto flex items-center justify-between px-6 py-4">
       <div className="flex flex-col items-start gap-0.5">
         <img
-          src="/opoad-logo.png"
+          src="/opoad-logo-transparent.png"
           alt="OPOAD"
           className="h-10 w-auto object-contain"
           style={{
             filter:
-              "drop-shadow(0 0 14px rgba(56,189,248,0.7)) drop-shadow(0 0 4px rgba(56,189,248,0.4))",
+              "brightness(1.8) drop-shadow(0 0 18px rgba(56,189,248,0.9)) drop-shadow(0 0 6px rgba(255,255,255,0.6)) drop-shadow(0 0 40px rgba(56,189,248,0.5))",
           }}
         />
         <p className="font-mono text-[9px] tracking-[0.32em] text-sky-400/80 pl-1">

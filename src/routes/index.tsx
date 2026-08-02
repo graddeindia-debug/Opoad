@@ -68,6 +68,9 @@ export const Route = createFileRoute("/")({
     ],
   }),
   beforeLoad: async () => {
+    // localStorage (where Supabase stores session) doesn't exist on the server.
+    // Skip the check during SSR — the component handles client-side redirect.
+    if (typeof window === "undefined") return;
     const { data } = await supabase.auth.getSession();
     if (!data.session) {
       throw redirect({ to: "/login" });
@@ -469,6 +472,28 @@ export const LIVE_RESEARCH_NEWS: ResearchNewsItem[] = [
 ];
 
 function DashboardRoute() {
+  const navigate = useNavigate();
+  const { session, loading } = useAuth();
+
+  useEffect(() => {
+    if (!loading && !session) {
+      navigate({ to: "/login" });
+    }
+  }, [session, loading, navigate]);
+
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#05070A]">
+        <div className="flex flex-col items-center gap-3">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-sky-400 border-t-transparent" />
+          <p className="text-xs font-mono text-white/40 tracking-widest">LOADING...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!session) return null;
+
   return (
     <SettingsProvider>
       <Dashboard />
