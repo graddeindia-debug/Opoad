@@ -235,20 +235,6 @@ function LoginPage() {
 
             </div>
 
-            {/* opoad-logo — height:32px, separate from circle, margin-bottom:16px before welcome */}
-            <div className="flex justify-center lg:justify-start" style={{ marginBottom: "16px" }}>
-              <img
-                src="/opoad-logo-transparent.png"
-                alt="OPOAD"
-                className="w-auto object-contain"
-                style={{
-                  height: "32px",
-                  filter:
-                    "brightness(2.0) contrast(1.1) drop-shadow(0 0 16px rgba(56,189,248,0.95)) drop-shadow(0 0 32px rgba(56,189,248,0.55)) drop-shadow(0 0 4px rgba(255,255,255,0.7))",
-                }}
-              />
-            </div>
-
             {/* Welcome text */}
             <div className="text-center lg:text-left">
               <h2 className="text-2xl font-semibold text-white">
