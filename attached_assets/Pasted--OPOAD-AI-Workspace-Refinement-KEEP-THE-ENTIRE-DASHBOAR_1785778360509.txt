@@ -1,0 +1,319 @@
+# OPOAD AI Workspace Refinement (KEEP THE ENTIRE DASHBOARD DESIGN UNCHANGED)
+
+## CRITICAL INSTRUCTION
+
+The current OPOAD dashboard design is FINAL.
+
+DO NOT redesign, resize, recolor, reposition, or modify any existing dashboard components except the AI Workspace.
+
+Keep unchanged:
+
+- OPOAD Logo
+- Earth Animation
+- Global Intelligence Core
+- Background
+- Navigation
+- Left Cards
+- Right Cards
+- Bottom Status Bar
+- Footer Statistics
+- Icons
+- Colors
+- Typography
+- Borders
+- Glassmorphism
+- Animations
+- Lighting
+
+The visual identity must remain exactly the same.
+
+--------------------------------------------------
+
+## REMOVE THE CURRENT AI WORKSPACE
+
+Delete the existing AI Describe box completely.
+
+The current version is wrong because:
+
+• It is not transparent enough.
+• It looks like a large solid panel.
+• It shows all AI status labels permanently.
+• It looks visually heavy.
+• It blocks the beauty of the Earth animation.
+• It makes the dashboard feel crowded.
+
+Replace it with a much cleaner and premium AI Workspace.
+
+--------------------------------------------------
+
+## TRANSPARENCY
+
+The AI Workspace should be almost invisible when idle.
+
+Transparency: 95–98%.
+
+Only a very soft blue holographic border should be visible.
+
+The Earth behind it must remain clearly visible.
+
+There should be no dark opaque background.
+
+Use only:
+
+Ultra Glass
+
+Holographic Reflection
+
+Soft Blur
+
+Very Thin Border
+
+Very Light Glow
+
+--------------------------------------------------
+
+## CLEAN MODE
+
+When the dashboard opens:
+
+Only display:
+
+• Placeholder:
+"Describe anything..."
+
+• Cursor
+
+• Send Button
+
+• Attachment Button
+
+• Voice Button
+
+• Image Upload Button
+
+Nothing else.
+
+Do NOT display:
+
+Thinking
+
+Searching
+
+Reasoning
+
+Planning
+
+Analyzing
+
+Generating
+
+Memory
+
+Deep Search
+
+Vision
+
+Code
+
+Toolbar
+
+Action Chips
+
+Prompt Chips
+
+Any AI status
+
+Everything should stay hidden until the user actually interacts.
+
+--------------------------------------------------
+
+## SMART DYNAMIC UI
+
+The interface must behave like ChatGPT, Gemini, Claude and Perplexity.
+
+Idle State
+
+Only:
+
+Describe anything...
+
+Transparent Input
+
+Cursor
+
+Minimal Icons
+
+Nothing else.
+
+--------------------------------------------------
+
+Typing State
+
+When the user starts typing:
+
+Animate the input line.
+
+Bottom line glows softly.
+
+Cursor becomes brighter.
+
+The active typing line receives a moving blue scan animation.
+
+Still do NOT show Thinking or Analysis.
+
+--------------------------------------------------
+
+Generating State
+
+Only AFTER the user presses Send.
+
+Show a single animated status.
+
+Rotate automatically between:
+
+Thinking...
+
+Analyzing...
+
+Searching...
+
+Reasoning...
+
+Reading Memory...
+
+Generating...
+
+Only ONE status should be visible at a time.
+
+Never display all of them together.
+
+Each status should smoothly fade into the next.
+
+--------------------------------------------------
+
+Response Finished
+
+After the answer is complete:
+
+Hide every status again automatically.
+
+Return to the clean minimal layout.
+
+--------------------------------------------------
+
+CENTER OF THE DASHBOARD
+
+The center of the dashboard must remain visually clean.
+
+Remove every unnecessary element.
+
+Do NOT place:
+
+News Panels
+
+Widgets
+
+Information Cards
+
+Floating Boxes
+
+Extra Labels
+
+Random Text
+
+Large Toolbars
+
+Everything except these should disappear:
+
+✔ Earth
+✔ Global Intelligence Core
+✔ AI Workspace
+✔ Bottom AI Core Platform
+
+The Earth should remain the visual focus.
+
+--------------------------------------------------
+
+INPUT EXPERIENCE
+
+The input should feel identical to ChatGPT and Gemini.
+
+Features:
+
+Growing Textarea
+
+Smooth Cursor
+
+Streaming Input
+
+Animated Bottom Line
+
+Blue Scan Effect
+
+Glass Reflection
+
+Soft Particle Glow
+
+--------------------------------------------------
+
+BUTTONS
+
+Keep only:
+
+Attach File
+
+Voice
+
+Image Upload
+
+Send
+
+Hidden until hover:
+
+Clear
+
+Stop Generation
+
+Regenerate
+
+--------------------------------------------------
+
+DESIGN LANGUAGE
+
+Everything must match OPOAD.
+
+No white.
+
+No grey panels.
+
+No black solid boxes.
+
+No thick borders.
+
+No heavy shadows.
+
+Only:
+
+Transparent Glass
+
+Blue Glow
+
+Minimal Interface
+
+Holographic Reflection
+
+Soft Ambient Lighting
+
+--------------------------------------------------
+
+FINAL GOAL
+
+The dashboard should feel premium, futuristic and uncluttered.
+
+When no one is using it, the center should look almost empty, with only the Earth and the transparent AI Workspace visible.
+
+The interface should reveal advanced AI components only when they are needed, exactly like ChatGPT, Gemini and Claude.
+
+Do not permanently display AI status indicators or feature labels.
+
+The result must look elegant, intelligent, minimal, and worthy of a next-generation AI operating system.

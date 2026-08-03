@@ -750,62 +750,8 @@ function Dashboard() {
               </p>
             </div>
 
-            {/* Real-time interactive Live News Wire cards directly in center dashboard */}
-            <div className="w-full flex-1 flex flex-col items-center justify-center py-4">
-              {/* Real-time interactive Live News Wire cards directly in center dashboard */}
-              <div className="w-[92%] sm:w-[86%] space-y-2.5 mt-2 animate-fade-in">
-                <div className="flex items-center justify-between px-1">
-                  <div className="flex items-center gap-1.5">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-                    </span>
-                    <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-cyan-300">
-                      Real-Time News Wire
-                    </span>
-                  </div>
-                  <span className="text-[9px] font-mono text-slate-500">
-                    Click card to analyze with AI
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3 w-full">
-                  {LIVE_RESEARCH_NEWS.map((item) => {
-                    const isSelected = selectedDashboardArticle?.id === item.id;
-                    return (
-                      <div
-                        key={item.id}
-                        onClick={() => {
-                          setSelectedDashboardArticle({
-                            title: item.title,
-                            description: item.description,
-                            id: item.id,
-                          });
-                        }}
-                        className={`group cursor-pointer rounded-2xl border p-3.5 text-left transition-all duration-300 ${
-                          isSelected
-                            ? "border-cyan-400 bg-cyan-950/20 shadow-[0_0_15px_rgba(0,217,255,0.2)]"
-                            : "border-cyan-500/10 bg-[#05070A]/50 hover:border-cyan-500/25 hover:bg-[#05070A]/70"
-                        }`}
-                      >
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="rounded-full bg-cyan-500/10 border border-cyan-500/20 px-1.5 py-0.5 text-[8px] font-mono uppercase tracking-wider text-cyan-300">
-                            {item.category}
-                          </span>
-                          <span className="text-[9px] text-slate-500 font-mono">{item.time}</span>
-                        </div>
-                        <h4 className="mt-2 text-[11px] font-semibold text-slate-200 group-hover:text-cyan-200 line-clamp-1 transition-colors">
-                          {item.title}
-                        </h4>
-                        <p className="mt-1 text-[10px] text-slate-400 line-clamp-2 leading-relaxed">
-                          {item.description}
-                        </p>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
+            {/* Clean center — Earth remains the visual focus */}
+            <div className="w-full flex-1" />
 
             <div className="glass-strong mt-auto flex items-center gap-6 rounded-2xl px-6 py-3 animate-floaty">
               <div className="text-center">
