@@ -15,6 +15,9 @@ export default defineConfig({
   vite: {
     server: {
       allowedHosts: true,
+      // Bind to the port the preview harness reads (DEV_PORT), falling back to
+      // the sandbox default. Port-only change; does not affect the app itself.
+      port: Number(process.env.DEV_PORT) || 8080,
     },
   },
 });
