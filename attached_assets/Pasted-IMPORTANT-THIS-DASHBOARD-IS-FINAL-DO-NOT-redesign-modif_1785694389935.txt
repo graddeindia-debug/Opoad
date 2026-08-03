@@ -1,0 +1,141 @@
+IMPORTANT — THIS DASHBOARD IS FINAL.
+
+DO NOT redesign, modify, replace, resize, restyle, recolor, reposition, or recreate ANY existing part of my dashboard.
+
+The current dashboard is FINAL and APPROVED.
+
+DO NOT TOUCH:
+
+- Dashboard layout
+- Earth animation
+- OPOAD logo
+- Header
+- Navigation
+- Glassmorphism style
+- Colors
+- Lighting
+- Background
+- Cards
+- Icons
+- Typography
+- Borders
+- Animations
+- Spacing
+- Branding
+- Global Intelligence Core section
+
+Everything that already exists must remain EXACTLY as it is.
+
+--------------------------------------------------
+
+ONLY make ONE new addition.
+
+The left and right card columns should be moved DOWN slightly (only enough to create space).
+
+Do not redesign those cards.
+
+Do not resize them.
+
+Do not change their appearance.
+
+Simply shift both columns downward evenly.
+
+--------------------------------------------------
+
+In the newly created empty space ABOVE both side columns, create ONE ultra-premium horizontal AI Describe Box.
+
+This Describe Box should stretch horizontally across the center area and integrate naturally with the existing dashboard.
+
+It must look like it has always been part of this interface.
+
+It must use the exact same futuristic glassmorphism language as the dashboard.
+
+No separate window.
+
+No popup.
+
+No floating chat panel.
+
+No modern chatbot rectangle.
+
+It must feel like the command console of the Global Intelligence Core.
+
+--------------------------------------------------
+
+The AI Describe Box must include:
+
+• Transparent holographic glass surface
+• Blue neon border glow
+• Animated bottom scanning line while typing
+• Streaming cursor
+• Intelligent placeholder
+• Voice button
+• Attachment button
+• Web Search
+• Deep Research
+• Think Mode
+• AI Agent Mode
+• Upload files
+• Images
+• PDF
+• Video
+• Audio
+• URL
+• GitHub
+• Clipboard
+• Drag & Drop
+• Suggestion chips
+• Thinking animation
+• Animated rotating OPOAD logo while thinking
+• Streaming response
+• Copy
+• Regenerate
+• Continue
+• Stop generating
+• Sources
+• Citations
+• Markdown
+• Code block
+• Tables
+• Charts
+• Image preview
+• Video preview
+
+Everything expected from a world-class AI assistant interface.
+
+--------------------------------------------------
+
+Animation Requirements
+
+When user clicks the Describe Box:
+
+• Border softly glows
+• Cursor appears
+• Blue pulse
+• Neural particles
+• Holographic scan
+• Bottom glowing line continuously moves while typing
+
+When AI is thinking:
+
+• Show "Thinking..."
+• Rotating OPOAD logo
+• Scanning effect
+• Neural pulse
+• No traditional loading spinner
+
+--------------------------------------------------
+
+The new Describe Box must perfectly match the existing dashboard.
+
+It should look like Apple Vision Pro + Iron Man JARVIS + Google Gemini + ChatGPT combined.
+
+MOST IMPORTANT:
+
+DO NOT CHANGE ANYTHING ELSE.
+
+This dashboard design is FINAL.
+
+Only move the left and right columns slightly downward and insert the new horizontal AI Describe Box above them.
+
+No other visual or structural modifications are allowed.

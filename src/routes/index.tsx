@@ -36,6 +36,7 @@ import { SettingsProvider } from "@/lib/settings";
 import { Button } from "@/components/ui/button";
 import { ErrorBoundary } from "@/components/dashboard/ErrorBoundary";
 import { DescribeBox } from "@/components/dashboard/DescribeBox";
+import { CommandConsole } from "@/components/dashboard/CommandConsole";
 import { AiProcessingOverlay } from "@/components/dashboard/AiProcessingOverlay";
 import { useAuth } from "@/lib/auth";
 import { supabase } from "@/lib/supabase";
@@ -715,8 +716,13 @@ function Dashboard() {
       <div className="pointer-events-none relative z-10 flex min-h-screen flex-col">
         <TopNav onOpenSettings={() => setSettingsOpen(true)} />
 
-        <main className="flex flex-1 items-stretch gap-4 px-4 pb-40 pt-4 md:px-6">
-          <section className="pointer-events-auto grid w-full max-w-xs shrink-0 grid-cols-2 content-start auto-rows-fr gap-3 md:max-w-sm lg:max-w-md self-start">
+        <main className="flex flex-1 flex-col gap-4 px-4 pb-40 pt-4 md:px-6">
+          {/* ── Full-width AI Workspace (top row) ── */}
+          <CommandConsole />
+
+          {/* ── Three-column row (cards pushed down) ── */}
+          <div className="flex flex-1 items-stretch gap-4 mt-2">
+          <section className="pointer-events-auto grid w-full max-w-xs shrink-0 grid-cols-2 content-start auto-rows-fr gap-3 md:max-w-sm lg:max-w-md self-start mt-6">
             {LEFT.map((m, i) => (
               <ModuleCard
                 key={m.title}
@@ -737,21 +743,15 @@ function Dashboard() {
             ))}
           </section>
 
-          <section className="hidden flex-1 flex-col items-center justify-between py-6 lg:flex pointer-events-auto">
+          <section className="hidden flex-1 flex-col items-center justify-between py-6 lg:flex pointer-events-auto mt-6">
             <div className="glass rounded-full px-5 py-2 text-center animate-floaty">
               <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-cyan-400 text-glow">
                 Global Intelligence Core
               </p>
             </div>
 
-            {/* Futuristic OPOAD AI Describe Box (Visual identity centerpiece) */}
+            {/* Real-time interactive Live News Wire cards directly in center dashboard */}
             <div className="w-full flex-1 flex flex-col items-center justify-center py-4">
-              <DescribeBox
-                onGenerateScript={handleGenerateScriptFromDescribe}
-                selectedNewsArticle={selectedDashboardArticle}
-                onClearArticle={() => setSelectedDashboardArticle(null)}
-              />
-
               {/* Real-time interactive Live News Wire cards directly in center dashboard */}
               <div className="w-[92%] sm:w-[86%] space-y-2.5 mt-2 animate-fade-in">
                 <div className="flex items-center justify-between px-1">
@@ -765,7 +765,7 @@ function Dashboard() {
                     </span>
                   </div>
                   <span className="text-[9px] font-mono text-slate-500">
-                    Click card to pass to Describe Box
+                    Click card to analyze with AI
                   </span>
                 </div>
 
@@ -837,7 +837,7 @@ function Dashboard() {
             </div>
           </section>
 
-          <section className="pointer-events-auto ml-auto grid w-full max-w-xs shrink-0 grid-cols-2 content-start auto-rows-fr gap-3 md:max-w-sm lg:max-w-md self-start">
+          <section className="pointer-events-auto ml-auto grid w-full max-w-xs shrink-0 grid-cols-2 content-start auto-rows-fr gap-3 md:max-w-sm lg:max-w-md self-start mt-6">
             {RIGHT.map((m, i) => (
               <ModuleCard
                 key={m.title}
@@ -857,6 +857,7 @@ function Dashboard() {
               />
             ))}
           </section>
+          </div>{/* end three-column row */}
         </main>
 
         <div className="pointer-events-none fixed inset-x-0 bottom-4 z-20 px-4">

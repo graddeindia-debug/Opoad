@@ -1,0 +1,471 @@
+# OPOAD Dashboard UI Upgrade (DO NOT MODIFY EXISTING DESIGN)
+
+## CRITICAL INSTRUCTION
+
+This dashboard design is FINAL.
+
+DO NOT redesign, restyle, resize, recolor, reposition, or modify ANY existing dashboard element except the AI Describe/Search area mentioned below.
+
+Keep EVERYTHING exactly as it is:
+
+- OPOAD Logo
+- Background
+- Earth Animation
+- Global Intelligence Core
+- Navigation
+- Top Bar
+- Bottom Status Bar
+- Left Cards
+- Right Cards
+- Card Design
+- Icons
+- Typography
+- Glassmorphism
+- Blue Glow Theme
+- Transparency
+- Borders
+- Animations
+- Colors
+- Lighting
+- Spacing
+
+The existing dashboard design must remain 100% untouched.
+
+--------------------------------------------------------
+
+## STEP 1
+
+Remove the current AI Describe/Search Box completely.
+
+Replace it with a brand-new futuristic Enterprise AI Workspace.
+
+Do NOT keep any part of the previous AI Describe Box.
+
+--------------------------------------------------------
+
+## STEP 2
+
+Move ONLY the left-side card column and the right-side card column slightly downward.
+
+DO NOT change:
+
+- Card Size
+- Card Width
+- Card Height
+- Card Style
+- Border
+- Glow
+- Transparency
+- Icons
+- Text
+
+Only move both columns downward enough to create a large horizontal space above them.
+
+Nothing else should move.
+
+--------------------------------------------------------
+
+## STEP 3
+
+Create a new AI Workspace inside the newly available top space.
+
+The AI Workspace must look like it belongs to this dashboard from day one.
+
+It should perfectly match the OPOAD visual language.
+
+No white background.
+
+No modern flat UI.
+
+No traditional chat box.
+
+Only futuristic transparent holographic glass.
+
+--------------------------------------------------------
+
+## AI WORKSPACE STYLE
+
+Ultra Transparent Glass (95%)
+
+Soft Blue Frosted Glass
+
+Thin Cyan Border
+
+Animated Holographic Reflection
+
+Floating Light Particles
+
+Blue Ambient Glow
+
+Rounded Premium Corners
+
+Very Clean
+
+Very Premium
+
+Looks like a combination of:
+
+- Apple Vision Pro
+- OpenAI ChatGPT
+- Google Gemini
+- Claude AI
+- Iron Man JARVIS
+- NASA Mission Control
+
+--------------------------------------------------------
+
+## INPUT AREA
+
+Create a large multiline prompt editor.
+
+The prompt editor should occupy most of the workspace.
+
+Placeholder should animate.
+
+Examples:
+
+Describe anything...
+
+Ask OPOAD...
+
+Generate Code...
+
+Research...
+
+Analyze...
+
+Create...
+
+Think...
+
+Build...
+
+--------------------------------------------------------
+
+## TYPING EXPERIENCE
+
+Exactly like ChatGPT, Gemini and Claude.
+
+The bottom typing line must stay animated continuously.
+
+The last typing line should have:
+
+Moving Blue Glow
+
+Scanning Light
+
+Animated Cursor
+
+Soft Pulse
+
+When typing:
+
+Increase glow intensity.
+
+Animate particles.
+
+Highlight the active line.
+
+Cursor becomes holographic.
+
+The typing experience should feel alive.
+
+--------------------------------------------------------
+
+## AI THINKING STATES
+
+When AI is processing, automatically show intelligent status indicators.
+
+Examples:
+
+Thinking...
+
+Analyzing...
+
+Reasoning...
+
+Planning...
+
+Searching...
+
+Reading Memory...
+
+Connecting Knowledge...
+
+Deep Thinking...
+
+Building Response...
+
+Generating...
+
+Validating...
+
+Completed.
+
+Each state must include:
+
+Animated Icon
+
+Blue Pulse
+
+Smooth Transition
+
+Loading Animation
+
+Particle Effect
+
+Shimmer
+
+Streaming Indicator
+
+--------------------------------------------------------
+
+## TOOLBAR
+
+Create a transparent floating toolbar.
+
+Include:
+
+Attach File
+
+Upload Image
+
+Microphone
+
+Voice Input
+
+Camera
+
+Clipboard
+
+Projects
+
+Knowledge Base
+
+Memory
+
+Search Web
+
+Deep Research
+
+Vision
+
+Reasoning
+
+Code
+
+Generate
+
+Every icon must match the OPOAD dashboard style.
+
+--------------------------------------------------------
+
+## BOTTOM ACTION BAR
+
+Transparent Glass Buttons
+
+Generate
+
+Stop
+
+Regenerate
+
+Cancel
+
+History
+
+Clear Chat
+
+Export
+
+Copy
+
+Share
+
+Nothing should look flat.
+
+Everything should be holographic.
+
+--------------------------------------------------------
+
+## AI RESPONSE EXPERIENCE
+
+Exactly like premium AI platforms.
+
+Support:
+
+Streaming Text
+
+Thinking Animation
+
+Typing Indicator
+
+Reasoning Indicator
+
+Character-by-Character Output
+
+Markdown
+
+Code Highlighting
+
+Tables
+
+Images
+
+Files
+
+Smooth Fade Animation
+
+--------------------------------------------------------
+
+## SUGGESTION CHIPS
+
+Before typing, display transparent holographic suggestion chips.
+
+Examples:
+
+Generate UI
+
+Deep Research
+
+Create Dashboard
+
+Analyze Business
+
+Write Code
+
+Summarize PDF
+
+Explain Architecture
+
+Fix Bugs
+
+Marketing Plan
+
+Investment Analysis
+
+When the user starts typing, the suggestion chips should smoothly disappear.
+
+--------------------------------------------------------
+
+## CHAT AREA
+
+Conversation history should appear below the prompt editor.
+
+Messages should use:
+
+Transparent Glass Cards
+
+Blue Border
+
+Soft Glow
+
+Smooth Animation
+
+No white chat bubbles.
+
+--------------------------------------------------------
+
+## ADVANCED FEATURES
+
+Support:
+
+Conversation Memory
+
+Context Awareness
+
+Streaming
+
+Markdown
+
+Code Blocks
+
+Tables
+
+File Upload
+
+Drag & Drop
+
+Image Understanding
+
+Voice Input
+
+Deep Reasoning
+
+Multi-step Thinking
+
+Search Integration
+
+Knowledge Retrieval
+
+--------------------------------------------------------
+
+## VISUAL EFFECTS
+
+Everything must match the current dashboard.
+
+Use:
+
+Blue Ambient Glow
+
+Holographic Glass
+
+Scanning Lines
+
+Particle Effects
+
+Floating Dots
+
+Animated Borders
+
+Light Reflection
+
+Micro Interactions
+
+Hover Glow
+
+Breathing Animation
+
+Cursor Trail
+
+Smooth Motion
+
+No Red.
+
+No Green.
+
+No Orange.
+
+Only OPOAD Blue Theme.
+
+--------------------------------------------------------
+
+## PERFORMANCE
+
+GPU Optimized
+
+60 FPS
+
+Smooth Rendering
+
+Efficient Animations
+
+No Lag
+
+--------------------------------------------------------
+
+## FINAL INSTRUCTION
+
+DO NOT redesign the dashboard.
+
+DO NOT change the current visual identity.
+
+DO NOT touch the Earth, Background, Cards, Navigation, Logo, Global Intelligence Core, Bottom Status Bar, or any existing design element.
+
+ONLY:
+
+1. Remove the existing AI Describe/Search Box.
+2. Move the left and right card columns slightly downward.
+3. Add the new ultra-premium transparent AI Workspace described above.
+
+The final result must look like the AI Workspace was originally designed as part of the OPOAD dashboard and should feel even more advanced than ChatGPT, Gemini, Claude, Perplexity, or Grok while preserving the exact OPOAD futuristic design language.
